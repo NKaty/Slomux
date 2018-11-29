@@ -8,7 +8,13 @@ export default (reducer, initialState) => {
     listeners.forEach((listener) => listener())
   }
 
-  const subscribe = (listener) => listeners.push(listener)
+  const subscribe = (listener) => {
+    listeners.push(listener)
+    return function unsubscribe() {
+      const index = listeners.indexOf(listener)
+      listeners.splice(index, 1)
+    }
+  }
 
   return { getState, dispatch, subscribe }
 }
