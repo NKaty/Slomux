@@ -1,6 +1,9 @@
 import { ADD_TODO } from './constants'
 
-export const addTodo = (todo) => ({
-  type: ADD_TODO,
-  payload: todo
-})
+export const addTodo = (text) => {
+  const id = (Date.now() + Math.random()).toString()
+  return {
+    type: ADD_TODO,
+    payload: { id, text }
+  }
+}
