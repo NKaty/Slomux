@@ -7,6 +7,18 @@ class ToDoComponent extends React.Component {
     todoText: ''
   }
 
+  updateText = (e) => {
+    const { value } = e.target
+
+    this.setState({ todoText: value })
+  }
+
+  addTodo = () => {
+    this.props.addTodo(this.state.todoText)
+
+    this.setState({ todoText: '' })
+  }
+
   render() {
     return (
       <div>
@@ -20,24 +32,12 @@ class ToDoComponent extends React.Component {
           <button onClick={this.addTodo}>Добавить</button>
           <ul>
             {this.props.todos.map((todo, idx) => (
-              <li>{todo}</li>
+              <li key={todo.id}>{todo.text}</li>
             ))}
           </ul>
         </div>
       </div>
     )
-  }
-
-  updateText(e) {
-    const { value } = e.target
-
-    this.state.todoText = value
-  }
-
-  addTodo() {
-    this.props.addTodo(this.state.todoText)
-
-    this.state.todoText = ''
   }
 }
 
