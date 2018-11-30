@@ -1,11 +1,8 @@
 import React from 'react'
+import SlomuxContext from './Context'
 
-export default class Provider extends React.Component {
-  componentWillMount() {
-    window.store = this.props.store
-  }
-
-  render() {
-    return this.props.children
-  }
+export default function Provider({ store, children }) {
+  return (
+    <SlomuxContext.Provider value={store}>{children}</SlomuxContext.Provider>
+  )
 }
