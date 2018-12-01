@@ -3,8 +3,10 @@ import SlomuxContext from './Context'
 
 export default (mapStateToProps, mapDispatchToProps) => (Component) => {
   class Connect extends React.Component {
+    store = this.context
+
     componentDidMount() {
-      this.unsubscribe = this.props.store.subscribe(this.handleChange)
+      this.unsubscribe = this.store.subscribe(this.handleChange)
     }
 
     componentWillUnmount() {
@@ -12,26 +14,21 @@ export default (mapStateToProps, mapDispatchToProps) => (Component) => {
     }
 
     handleChange = () => {
-      this.forceUpdate()
+      this.setState({})
     }
 
     render() {
-      const {store, ...rest} = this.props
       return (
         <Component
-          {...mapStateToProps(store.getState(), rest)}
-          {...mapDispatchToProps(store.dispatch, rest)}
-          {...rest}
+          {...mapStateToProps(this.store.getState(), this.props)}
+          {...mapDispatchToProps(this.store.dispatch, this.props)}
+          {...this.props}
         />
       )
     }
   }
 
-  return function WithConnect (props) {
-    return (
-      <SlomuxContext.Consumer>
-        {(store) => <Connect {...props} store={store} />}
-      </SlomuxContext.Consumer>
-    )
-  }
+  Connect.contextType = SlomuxContext
+
+  return Connect
 }
