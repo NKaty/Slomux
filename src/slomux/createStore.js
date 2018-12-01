@@ -10,6 +10,8 @@ export default (reducer, initialState) => {
 
   const subscribe = (listener) => {
     listeners.push(listener)
+
+    // Added unsubscribe method
     return function unsubscribe() {
       const index = listeners.indexOf(listener)
       listeners.splice(index, 1)
