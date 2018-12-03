@@ -42,9 +42,12 @@ class ToBuyComponent extends React.Component {
 }
 
 export default connect(
-  (state) => ({
-    tobuys: state.tobuys
-  }),
+  (state) => {
+    console.log('tobuy mapStateToProp call')
+    return {
+      tobuys: state.tobuys
+    }
+  },
   (dispatch) => ({
     addTobuy: (text) => dispatch(addTobuy(text))
   })

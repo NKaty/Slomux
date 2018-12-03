@@ -53,9 +53,12 @@ class ToDoComponent extends React.Component {
 }
 
 export default connect(
-  (state) => ({
-    todos: state.todos
-  }),
+  (state) => {
+    console.log('todo mapStateToProp call')
+    return {
+      todos: state.todos
+    }
+  },
   (dispatch) => ({
     addTodo: (text) => dispatch(addTodo(text))
   })

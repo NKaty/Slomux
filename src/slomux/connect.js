@@ -1,9 +1,17 @@
 import React from 'react'
 import SlomuxContext from './Context'
+import selectorFactory from './selectorFactory'
 
-export default (mapStateToProps, mapDispatchToProps) => (Component) => {
+export default (
+  mapStateToProps = () => ({}),
+  mapDispatchToProps = () => ({})
+) => (Component) => {
   class Connect extends React.Component {
-    store = this.context
+    constructor(props, context) {
+      super(props, context)
+      this.store = context
+      this.initSelector()
+    }
 
     componentDidMount() {
       this.unsubscribe = this.store.subscribe(this.handleChange)
@@ -14,6 +22,14 @@ export default (mapStateToProps, mapDispatchToProps) => (Component) => {
       if (this.unsubscribe) this.unsubscribe()
     }
 
+    initSelector() {
+      this.selector = selectorFactory(
+        this.store.dispatch,
+        mapStateToProps,
+        mapDispatchToProps
+      )
+    }
+
     // Added usage of setState instead of forceUpdate
     // setState will check shouldComponentUpdate while the forceUpdate won’t,
     // which gives a chance for further optimization when re-render is unnecessary
@@ -22,14 +38,9 @@ export default (mapStateToProps, mapDispatchToProps) => (Component) => {
     }
 
     render() {
-      return (
-        <Component
-          {...mapStateToProps(this.store.getState(), this.props)}
-          {...mapDispatchToProps(this.store.dispatch, this.props)}
-          // Inject ownProps into wrapped component
-          {...this.props}
-        />
-      )
+      const mergedProps = this.selector(this.store.getState(), this.props)
+
+      return <Component {...mergedProps} />
     }
   }
 
