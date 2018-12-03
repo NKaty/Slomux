@@ -7,15 +7,25 @@ import tobuyReducer from './tobuy/reducer'
 import Menu from './menu/Menu'
 import * as serviceWorker from './serviceWorker'
 
-const reducer = (state = {}, action) => {
-  return {
-    todos: todoReducer(state.todos, action),
-    tobuys: tobuyReducer(state.tobuys, action)
+const combineReducers = (reducers) => {
+  return (state = {}, action) => {
+    return Object.keys(reducers).reduce((nextState, key) => {
+      nextState[key] = reducers[key](state[key], action)
+      return nextState
+    }, {})
   }
 }
 
 ReactDOM.render(
-  <Provider store={createStore(reducer, {})}>
+  <Provider
+    store={createStore(
+      combineReducers({
+        todos: todoReducer,
+        tobuys: tobuyReducer
+      }),
+      {}
+    )}
+  >
     <Menu />
   </Provider>,
   document.getElementById('root')

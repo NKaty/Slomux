@@ -22,10 +22,14 @@ class Menu extends React.Component {
     return (
       <>
         <h2>Менеджер задач</h2>
-        <button onClick={this.todoToggle}>{this.state.todoOpen ? 'Закрыть' : 'Открыть'}</button>
+        <button onClick={this.todoToggle}>
+          {this.state.todoOpen ? 'Закрыть' : 'Открыть'}
+        </button>
         {this.state.todoOpen ? <Todo title="Список задач" /> : null}
         <h2>Менеджер покупок</h2>
-        <button onClick={this.tobuyToggle}>{this.state.tobuyOpen ? 'Закрыть' : 'Открыть'}</button>
+        <button onClick={this.tobuyToggle}>
+          {this.state.tobuyOpen ? 'Закрыть' : 'Открыть'}
+        </button>
         {this.state.tobuyOpen ? <Tobuy title="Список покупок" /> : null}
       </>
     )
