@@ -2,13 +2,21 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Provider from './slomux/Provider'
 import createStore from './slomux/createStore'
-import reducer from './todo/reducer'
-import ToDo from './todo/Todo'
+import todoReducer from './todo/reducer'
+import tobuyReducer from './tobuy/reducer'
+import Menu from './menu/Menu'
 import * as serviceWorker from './serviceWorker'
 
+const reducer = (state = {}, action) => {
+  return {
+    todos: todoReducer(state.todos, action),
+    tobuys: tobuyReducer(state.tobuys, action)
+  }
+}
+
 ReactDOM.render(
-  <Provider store={createStore(reducer, [])}>
-    <ToDo title="Список задач" />
+  <Provider store={createStore(reducer, {})}>
+    <Menu />
   </Provider>,
   document.getElementById('root')
 )

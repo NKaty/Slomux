@@ -18,5 +18,7 @@ export default (reducer, initialState) => {
     }
   }
 
+  dispatch({})
+
   return { getState, dispatch, subscribe }
 }
