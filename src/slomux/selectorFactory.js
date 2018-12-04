@@ -1,10 +1,6 @@
 import { shallowEqual, strictEqual } from './utils'
 
-export default function selectorFactory(
-  dispatch,
-  mapStateToProps,
-  mapDispatchToProps
-) {
+export function selectorFactory(dispatch, mapStateToProps, mapDispatchToProps) {
   let state
   let ownProps
   let stateProps
@@ -60,7 +56,22 @@ export default function selectorFactory(
       console.log(3, mergedProps)
       return mergedProps
     }
+
     console.log(4, mergedProps)
     return mergedProps
   }
+}
+
+export function makeSelectorStateful(selector, store) {
+  const statefulSelector = {
+    run: function(props) {
+      const nextProps = selector(store.getState(), props)
+      if (nextProps !== statefulSelector.props) {
+        statefulSelector.shouldComponentUpdate = true
+        statefulSelector.props = nextProps
+      }
+    }
+  }
+
+  return statefulSelector
 }
