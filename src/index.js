@@ -4,7 +4,7 @@ import Provider from './slomux/Provider'
 import createStore from './slomux/createStore'
 import applyMiddleware from './slomux/applyMiddleware'
 import logger from './middleware/logger'
-import delay from './middleware/delay'
+import thunk from './middleware/thunk'
 import todoReducer from './todo/reducer'
 import tobuyReducer from './tobuy/reducer'
 import Menu from './menu/Menu'
@@ -25,7 +25,7 @@ const store = createStore(
     tobuys: tobuyReducer
   }),
   {},
-  applyMiddleware(logger, delay)
+  applyMiddleware(thunk, logger)
 )
 
 ReactDOM.render(

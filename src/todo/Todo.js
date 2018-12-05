@@ -1,6 +1,6 @@
 import React from 'react'
 import connect from '../slomux/connect'
-import { addTodo } from './ac'
+import { addTodo, deleteTodo } from './ac'
 
 class ToDoComponent extends React.Component {
   state = {
@@ -25,6 +25,10 @@ class ToDoComponent extends React.Component {
     this.setState({ todoText: '' })
   }
 
+  deleteTodo = (id) => () => {
+    this.props.deleteTodo(id)
+  }
+
   render() {
     return (
       <div>
@@ -43,7 +47,10 @@ class ToDoComponent extends React.Component {
               // And it is not recommended using indexes for keys if the order of items may change
               // So todo was turned into an object with two properties: id and text
               // Id was used as an unique key for array items
-              <li key={todo.id}>{todo.text}</li>
+              <li key={todo.id}>
+                {todo.text}{' '}
+                <button onClick={this.deleteTodo(todo.id)}>X</button>
+              </li>
             ))}
           </ul>
         </div>
@@ -60,6 +67,7 @@ export default connect(
     }
   },
   (dispatch) => ({
-    addTodo: (text) => dispatch(addTodo(text))
+    addTodo: (text) => dispatch(addTodo(text)),
+    deleteTodo: (id) => dispatch(deleteTodo(id))
   })
 )(ToDoComponent)
