@@ -1,11 +1,10 @@
 import React from 'react'
 import SlomuxContext from './Context'
 import { selectorFactory, makeSelectorStateful } from './selectorFactory'
+import bindActionCreators from './bindActionCreators'
 
-export default (
-  mapStateToProps = () => ({}),
-  mapDispatchToProps = () => ({})
-) => (Component) => {
+export default (mapStateToProps = () => ({}),
+  mapDispatchToProps) => (Component) => {
   class Connect extends React.Component {
     constructor(props, context) {
       super(props, context)
@@ -31,6 +30,7 @@ export default (
     }
 
     initSelector() {
+      mapDispatchToProps = bindActionCreators(mapDispatchToProps)
       const selector = selectorFactory(
         this.store.dispatch,
         mapStateToProps,

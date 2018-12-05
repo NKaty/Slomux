@@ -66,8 +66,5 @@ export default connect(
       todos: state.todos
     }
   },
-  (dispatch) => ({
-    addTodo: (text) => dispatch(addTodo(text)),
-    deleteTodo: (id) => dispatch(deleteTodo(id))
-  })
+  { addTodo, deleteTodo }
 )(ToDoComponent)
