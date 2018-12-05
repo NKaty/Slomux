@@ -2,6 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Provider from './slomux/Provider'
 import createStore from './slomux/createStore'
+import applyMiddleware from './slomux/applyMiddleware'
+import logger from './middleware/logger'
+import delay from './middleware/delay'
 import todoReducer from './todo/reducer'
 import tobuyReducer from './tobuy/reducer'
 import Menu from './menu/Menu'
@@ -16,15 +19,18 @@ const combineReducers = (reducers) => {
   }
 }
 
+const store = createStore(
+  combineReducers({
+    todos: todoReducer,
+    tobuys: tobuyReducer
+  }),
+  {},
+  applyMiddleware(logger, delay)
+)
+
 ReactDOM.render(
   <Provider
-    store={createStore(
-      combineReducers({
-        todos: todoReducer,
-        tobuys: tobuyReducer
-      }),
-      {}
-    )}
+    store={store}
   >
     <Menu />
   </Provider>,
