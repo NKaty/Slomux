@@ -1,6 +1,7 @@
 import React from 'react'
 import connect from '../slomux/connect'
 import { addTodo, deleteTodo } from './ac'
+import {todoSelector} from '../selectors'
 
 class ToDoComponent extends React.Component {
   state = {
@@ -63,7 +64,7 @@ export default connect(
   (state) => {
     console.log('todo mapStateToProp call')
     return {
-      todos: state.todos
+      todos: todoSelector(state)
     }
   },
   { addTodo, deleteTodo }

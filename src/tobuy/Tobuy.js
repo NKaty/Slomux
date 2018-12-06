@@ -1,6 +1,7 @@
 import React from 'react'
 import connect from '../slomux/connect'
 import { addTobuy } from './ac'
+import {tobuySelector} from '../selectors'
 
 class ToBuyComponent extends React.Component {
   state = {
@@ -45,7 +46,7 @@ export default connect(
   (state) => {
     console.log('tobuy mapStateToProp call')
     return {
-      tobuys: state.tobuys
+      tobuys: tobuySelector(state)
     }
   },
   (dispatch) => ({

@@ -7,6 +7,7 @@ import logger from './middleware/logger'
 import thunk from './middleware/thunk'
 import todoReducer from './todo/reducer'
 import tobuyReducer from './tobuy/reducer'
+import filterReducer from './filter/reducer'
 import Menu from './menu/Menu'
 import * as serviceWorker from './serviceWorker'
 
@@ -22,7 +23,8 @@ const combineReducers = (reducers) => {
 const store = createStore(
   combineReducers({
     todos: todoReducer,
-    tobuys: tobuyReducer
+    tobuys: tobuyReducer,
+    filter: filterReducer
   }),
   {},
   applyMiddleware(thunk, logger)

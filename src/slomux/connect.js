@@ -51,7 +51,7 @@ export default (mapStateToProps = () => ({}),
     }
 
     render() {
-      console.log('render', this.props.title)
+      console.log('render', this.props.title || 'Все задачи и покупки')
       const selector = this.selector
       selector.shouldComponentUpdate = false
 
