@@ -22,6 +22,10 @@ export default (mapStateToProps, mapDispatchToProps) => (Component) => {
     }
 
     render() {
+      // Added check in case functions are not passed
+      if (typeof mapStateToProps !== 'function') mapStateToProps = () => {}
+      if (typeof mapDispatchToProps !== 'function') mapDispatchToProps = () => {}
+
       return (
         <Component
           {...mapStateToProps(this.store.getState(), this.props)}
